@@ -56,6 +56,17 @@ const setSession = (cb = () => {}) => (err, authResult) => {
   }
 }
 
+export const checkSession = callback => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn")
+  console.log({ isLoggedIn })
+  if (isLoggedIn === "false") {
+    console.log("Not logged in")
+    callback()
+    return
+  }
+  auth.checkSession({}, setSession(callback))
+}
+
 export const handleAuthentication = () => {
   auth.parseHash(setSession())
 }
