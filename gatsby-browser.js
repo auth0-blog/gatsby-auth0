@@ -15,7 +15,6 @@ class SessionCheck extends React.Component {
   }
 
   componentWillMount() {
-    console.log(localStorage.getItem("isLoggedIn"))
     checkSession(this.handleCheckSession)
   }
 

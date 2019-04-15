@@ -22,7 +22,7 @@ const tokens = {
 let user = {}
 
 export const isAuthenticated = () => {
-  return !!localStorage.getItem("isLoggedIn")
+  return localStorage.getItem("isLoggedIn") === "true" ? true : false
 }
 
 export const login = () => {
@@ -58,9 +58,7 @@ const setSession = (cb = () => {}) => (err, authResult) => {
 
 export const checkSession = callback => {
   const isLoggedIn = localStorage.getItem("isLoggedIn")
-  console.log({ isLoggedIn })
   if (isLoggedIn === "false") {
-    console.log("Not logged in")
     callback()
     return
   }
@@ -73,4 +71,14 @@ export const handleAuthentication = () => {
 
 export const getProfile = () => {
   return user
+}
+
+export const logout = () => {
+  tokens.accessToken = false
+  tokens.idToken = false
+  tokens.expiresAt = false
+  user = {}
+  localStorage.setItem("isLoggedIn", false)
+
+  auth.logout()
 }
