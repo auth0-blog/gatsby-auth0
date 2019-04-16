@@ -1,5 +1,5 @@
 # Auth0 Gatsby Starter
-This is the sample application for the Auth0 tutorial on [Securing Gatsby with Auth0](http://www.auth0.com/blog/securing-gatsby-with-auth0/). It is based on the [official Gatsby hello-world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
+This is the sample application for the Auth0 tutorial on [Securing Gatsby with Auth0](https://auth0.com/blog/securing-gatsby-with-auth0/). It is based on the [official Gatsby hello-world starter](https://github.com/gatsbyjs/gatsby-starter-hello-world).
 
 To get started, clone this repository:
 
