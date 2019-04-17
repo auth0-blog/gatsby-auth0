@@ -1,13 +1,12 @@
 import React from "react"
-import { checkSession } from "./src/utils/auth"
+import { silentAuth } from "./src/utils/auth"
 
 class SessionCheck extends React.Component {
-  state = {
-    loading: true,
-  }
-
-  construct() {
-    this.handleCheckSession = this.handleCheckSession.bind(this)
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: true,
+    }
   }
 
   handleCheckSession = () => {
@@ -15,7 +14,7 @@ class SessionCheck extends React.Component {
   }
 
   componentDidMount() {
-    checkSession(this.handleCheckSession)
+    silentAuth(this.handleCheckSession)
   }
 
   render() {
