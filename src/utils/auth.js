@@ -8,12 +8,13 @@ const auth = isBrowser
       domain: process.env.AUTH0_DOMAIN,
       clientID: process.env.AUTH0_CLIENTID,
       redirectUri: process.env.AUTH0_CALLBACK,
-      responseType: "id_token",
+      responseType: "token id_token",
       scope: "openid profile email",
     })
   : {}
 
 const tokens = {
+  accessToken: false,
   idToken: false,
   expiresAt: false,
 }
@@ -39,8 +40,9 @@ const setSession = (cb = () => {}) => (err, authResult) => {
     return
   }
 
-  if (authResult && authResult.idToken) {
+  if (authResult && authResult.accessToken && authResult.idToken) {
     let expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
+    tokens.accessToken = authResult.accessToken
     tokens.idToken = authResult.idToken
     tokens.expiresAt = expiresAt
     user = authResult.idTokenPayload
