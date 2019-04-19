@@ -22,6 +22,10 @@ const tokens = {
 let user = {}
 
 export const isAuthenticated = () => {
+  if (!isBrowser) {
+    return
+  }
+
   return localStorage.getItem("isLoggedIn") === "true"
 }
 
@@ -58,6 +62,10 @@ export const silentAuth = callback => {
 }
 
 export const handleAuthentication = () => {
+  if (!isBrowser) {
+    return
+  }
+
   auth.parseHash(setSession())
 }
 
