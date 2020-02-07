@@ -34,6 +34,7 @@ export const login = () => {
     return
   }
 
+  if(window.localStorage.getItem("requestPath") === null) window.localStorage.setItem("requestPath", window.location.pathname)
   auth.authorize()
 }
 
@@ -51,13 +52,20 @@ const setSession = (cb = () => {}) => (err, authResult) => {
     tokens.expiresAt = expiresAt
     user = authResult.idTokenPayload
     localStorage.setItem("isLoggedIn", true)
-    navigate("/account")
+    let requestPath = window.localStorage.getItem("requestPath")
+    if(requestPath) {
+      window.localStorage.removeItem("requestPath")
+      navigate(requestPath)
+    }
     cb()
   }
 }
 
 export const silentAuth = callback => {
-  if (!isAuthenticated()) return callback()
+  if (!isAuthenticated()) {
+    return callback()
+  }
+  if(window.localStorage.getItem("requestPath") === null) window.localStorage.setItem("requestPath", window.location.pathname)
   auth.checkSession({}, setSession(callback))
 }
 
