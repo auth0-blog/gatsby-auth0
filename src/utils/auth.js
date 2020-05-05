@@ -34,7 +34,9 @@ export const login = () => {
     return
   }
 
-  auth.authorize()
+  auth.authorize({
+    appState: `${window.location.pathname}${window.location.search}`,
+  })
 }
 
 const setSession = (cb = () => {}) => (err, authResult) => {
@@ -51,14 +53,21 @@ const setSession = (cb = () => {}) => (err, authResult) => {
     tokens.expiresAt = expiresAt
     user = authResult.idTokenPayload
     localStorage.setItem("isLoggedIn", true)
-    navigate("/account")
+    const redirect = authResult.appState || "/"
+    navigate(redirect)
     cb()
   }
 }
 
 export const silentAuth = callback => {
   if (!isAuthenticated()) return callback()
-  auth.checkSession({}, setSession(callback))
+
+  auth.checkSession(
+    {
+      state: window.location.pathname + window.location.search,
+    },
+    setSession(callback)
+  )
 }
 
 export const handleAuthentication = () => {
